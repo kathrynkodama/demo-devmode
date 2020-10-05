@@ -2,7 +2,6 @@ package it.io.openliberty.sample;
 
 import java.net.URL;
 
-import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.provider.jsrjsonp.JsrJsonpProvider;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -15,11 +14,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import io.openliberty.sample.system.SimpleHello;
-import jakarta.inject.Inject;
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.client.WebTarget;
-import jakarta.ws.rs.core.Response;
+import javax.inject.Inject;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @RunWith(Arquillian.class)
 public class HelloIT {
@@ -48,8 +48,11 @@ public class HelloIT {
         WebTarget target = client.target(baseURL + "/hello");
         Response response = target.request().get();
 
-        System.out.println("STATUS: " + response.getStatus());
         Assert.assertEquals("Incorrect response code from " + baseURL, 200, response.getStatus());
+
+        String responseStr = response.readEntity(MediaType.TEXT_HTML.getClass());
+        String expectedResp = "Hello Jakarta EE 8!\n";
+        Assert.assertEquals("The response on the local and remote JVM should match", expectedResp, responseStr);
     }
 
 }
