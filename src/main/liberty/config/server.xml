@@ -2,18 +2,30 @@
     <featureManager>
         <feature>jakartaee-9.0</feature>
         <feature>localConnector-1.0</feature>
+        <!-- <feature>jaxrs-2.1</feature> -->
     </featureManager>
 
     <webApplication location="${artifactId}.war" contextRoot="/"/>
 
+
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <httpEndpoint id="defaultHttpEndpoint"
+                  httpPort="9080"
+                  httpsPort="9443" />
+
+    <!-- Automatically expand WAR files and EAR files -->
+    <applicationManager autoExpand="true"/>
+
+    <!-- Default SSL configuration enables trust for default certificates from the Java runtime --> 
+    <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
     <!-- <mpMetrics authentication="false"/> -->
 
     <!-- tag::logging[] -->
     <!-- <logging traceSpecification="com.ibm.ws.microprofile.health.*=all" /> -->
     <!-- end::logging[] -->
 
-    <httpEndpoint host="*" httpPort="${default.http.port}" 
-        httpsPort="${default.https.port}" id="defaultHttpEndpoint"/>
+    <!-- <httpEndpoint host="*" httpPort="${default.http.port}" 
+        httpsPort="${default.https.port}" id="defaultHttpEndpoint"/> -->
 
     <!-- <variable name="io_openliberty_guides_system_inMaintenance" value="false"/> -->
 </server>

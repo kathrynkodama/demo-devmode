@@ -23,7 +23,7 @@
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
-                <version>1.4.0.Final</version>
+                <version>1.7.0.Alpha3</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -32,6 +32,10 @@
     </dependencyManagement>
     
     <dependencies>
+        <dependency>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
+		</dependency>
         <!-- Provided dependencies -->
         <dependency>
             <groupId>jakarta.platform</groupId>
@@ -85,9 +89,8 @@
         </dependency>
         <dependency>
             <groupId>io.openliberty.arquillian</groupId>
-            <artifactId>arquillian-liberty-managed-junit</artifactId>
-            <version>1.1.6</version>
-            <type>pom</type>
+            <artifactId>arquillian-liberty-managed</artifactId>
+            <version>1.0.7-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -99,7 +102,35 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
+
         <plugins>
+            <!-- <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                  <execution>
+                    <id>extract-support-feature</id>
+                    <phase>pre-integration-test</phase>
+                    <goals>
+                      <goal>unpack</goal>
+                    </goals>
+                  </execution>
+                </executions>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>io.openliberty.arquillian</groupId>
+                      <artifactId>arquillian-liberty-support</artifactId>
+                      <version>1.0.7-SNAPSHOT</version>
+                      <type>zip</type>
+                      <classifier>feature</classifier>
+                      <overWrite>false</overWrite>
+                      <outputDirectory>${project.build.directory}/liberty/wlp/usr</outputDirectory>
+                    </artifactItem>
+                  </artifactItems>
+                </configuration>
+              </plugin> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -118,10 +149,27 @@
                     <runtimeArtifact>
                         <groupId>io.openliberty.beta</groupId>
                         <artifactId>openliberty-runtime</artifactId>
-                        <version>20.0.0.10-beta</version>
+                        <version>20.0.0.11-beta</version>
                         <type>zip</type>
                     </runtimeArtifact>
+                    <!-- begin configure-arquillian -->
+                    <!-- <arquillianProperties>
+                        <verifyApps>arquillian-test</verifyApps>
+                        <wlpHome>${project.build.directory}/liberty/wlp</wlpHome>
+                        <wlpHome>/Users/kathrynkodama/devex/sampleProjects/demo-devmode/target/liberty/wlp</wlpHome>
+                    </arquillianProperties>
+                    <skipIfArquillianXmlExists>true</skipIfArquillianXmlExists> -->
+                    <!-- end configure-arquillian -->
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>configure-arquillian-xml</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>configure-arquillian</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <!-- end::libertyMavenPlugin[] -->
             <plugin>
