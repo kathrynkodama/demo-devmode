@@ -98,39 +98,18 @@
             <artifactId>shrinkwrap-api</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.enterprise/jakarta.enterprise.cdi-api -->
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <version>3.0.0-M4</version>
+          </dependency>
     </dependencies>
 
     <build>
         <finalName>${project.artifactId}</finalName>
 
         <plugins>
-            <!-- <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.1</version>
-                <executions>
-                  <execution>
-                    <id>extract-support-feature</id>
-                    <phase>pre-integration-test</phase>
-                    <goals>
-                      <goal>unpack</goal>
-                    </goals>
-                  </execution>
-                </executions>
-                <configuration>
-                  <artifactItems>
-                    <artifactItem>
-                      <groupId>io.openliberty.arquillian</groupId>
-                      <artifactId>arquillian-liberty-support</artifactId>
-                      <version>1.0.7-SNAPSHOT</version>
-                      <type>zip</type>
-                      <classifier>feature</classifier>
-                      <overWrite>false</overWrite>
-                      <outputDirectory>${project.build.directory}/liberty/wlp/usr</outputDirectory>
-                    </artifactItem>
-                  </artifactItems>
-                </configuration>
-              </plugin> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -140,18 +119,21 @@
                 </configuration>
             </plugin>
             <!-- Enable liberty-maven plugin -->
-            <!-- tag::libertyMavenPlugin[] -->
             <plugin>
                 <groupId>io.openliberty.tools</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
                 <version>3.2.3</version>
                 <configuration>
-                    <runtimeArtifact>
+                    <!-- path to zip of local build of OL --> 
+                    <install>
+                        <runtimeUrl>file:////Users/kathrynkodama/devex/libertyGit/open-liberty/dev/cnf/release/dev/openliberty/20.0.0.11-202010191634/openliberty-20.0.0.11-202010191634.zip</runtimeUrl>
+                    </install>
+                    <!-- <runtimeArtifact>
                         <groupId>io.openliberty.beta</groupId>
                         <artifactId>openliberty-runtime</artifactId>
                         <version>20.0.0.11-beta</version>
                         <type>zip</type>
-                    </runtimeArtifact>
+                    </runtimeArtifact> -->
                     <!-- begin configure-arquillian -->
                     <!-- <arquillianProperties>
                         <verifyApps>arquillian-test</verifyApps>
