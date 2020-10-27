@@ -21,9 +21,15 @@ import java.io.InputStream;
 import java.net.URL;
 
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+
+import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,10 +46,13 @@ public class WebArchiveIT {
 //    org.jboss.weld.exceptions.IllegalArgumentException : WELD-001408: Unsatisfied dependencies for type SimpleHello with qualifiers @Default
 //    at injection point [BackedAnnotatedField] @Inject it.io.openliberty.sample.WebArchiveIT.simpleHello
    @Deployment(testable = false) 
-   public static WebArchive createDeployment() {
-      WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "testapp.war");
-      webArchive.addClass(SimpleHello.class);
-      return webArchive;
+   public static EnterpriseArchive createDeployment() {
+      return ShrinkWrap.create(EnterpriseArchive.class, "test.ear")
+            .addAsModule(ShrinkWrap.create(WebArchive.class, "test1.war")
+                              .addClass(SimpleHello.class))
+            .addAsModule(ShrinkWrap.create(JavaArchive.class, "test.jar")
+                              .addClass(WebArchiveIT.class)
+                              .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml"));
    }
 
    @ArquillianResource
@@ -53,9 +62,10 @@ public class WebArchiveIT {
    SimpleHello simpleHello;
 
    @Test
+   @RunAsClient
    public void simpleHelloTest() throws Exception {
       URL url = new URL(baseURL, "hello");
-      assertEquals("/testapp/", baseURL.getPath());
+      assertEquals("/test1/", baseURL.getPath());
       String response = readAllAndClose(url.openStream());
       assertEquals("Hello Jakarta EE 9!\n", response);
    }
