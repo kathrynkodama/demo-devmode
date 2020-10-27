@@ -11,7 +11,7 @@ import java.io.IOException;
  *
  * @author Ivar Grimstad (ivar.grimstad@eclipse-foundation.org)
  */
-@WebServlet("/hello")
+// @WebServlet("/hello")
 public class SimpleHello extends HttpServlet {
 	
     @Override
