@@ -10,10 +10,11 @@ tasks.withType(JavaCompile) {
 // configure liberty-gradle-plugin 
 buildscript {
     repositories {
+        mavenLocal()
         mavenCentral()
     }
     dependencies {
-        classpath 'io.openliberty.tools:liberty-gradle-plugin:3.0'
+        classpath 'io.openliberty.tools:liberty-gradle-plugin:3.1-M4-SNAPSHOT'
     }
 }
 
@@ -24,6 +25,15 @@ ext {
 repositories {
     mavenCentral()
 }
+
+// liberty {
+//       install {
+//           version = "20.0.0_11"
+//       }
+//   }
+// liberty {
+//     runtime = ['group':'io.openliberty','name':'openliberty-runtime', 'version':'20.0.0.10']
+// }
 
 dependencies {
     // provided dependencies
