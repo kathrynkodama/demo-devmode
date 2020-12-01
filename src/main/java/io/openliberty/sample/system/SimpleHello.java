@@ -7,10 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- *
- * @author Ivar Grimstad (ivar.grimstad@eclipse-foundation.org)
- */
 @WebServlet("/hello")
 public class SimpleHello extends HttpServlet {
 	

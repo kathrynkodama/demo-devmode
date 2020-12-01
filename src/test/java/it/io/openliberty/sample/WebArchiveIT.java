@@ -14,7 +14,7 @@
  */
 package it.io.openliberty.sample;
 
-import static org.junit.Assert.assertEquals;
+// import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -22,8 +22,9 @@ import java.net.URL;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.arquillian.junit.Arquillian;
+// import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 
@@ -31,14 +32,16 @@ import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.testng.Assert;
+// import org.junit.Test;
+// import org.junit.runner.RunWith;
+import org.testng.annotations.Test;
 
 import io.openliberty.sample.system.SimpleHello;
 import jakarta.inject.Inject;
 
-@RunWith(Arquillian.class)
-public class WebArchiveIT {
+@Test
+public class WebArchiveIT extends Arquillian {
 
 //    if testable = true, test fails on 
 //    java.lang.RuntimeException: Could not inject members
@@ -65,9 +68,9 @@ public class WebArchiveIT {
    @RunAsClient
    public void simpleHelloTest() throws Exception {
       URL url = new URL(baseURL, "hello");
-      assertEquals("/test1/", baseURL.getPath());
+      Assert.assertEquals("/test1/", baseURL.getPath());
       String response = readAllAndClose(url.openStream());
-      assertEquals("Hello Jakarta EE 9!\n", response);
+      Assert.assertEquals("Hello Jakarta EE 9!\n", response);
    }
 
    private String readAllAndClose(InputStream is) throws Exception {

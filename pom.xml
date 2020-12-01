@@ -23,7 +23,7 @@
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
-                <version>1.7.0.Alpha3</version>
+                <version>1.7.0.Alpha5</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -32,10 +32,20 @@
     </dependencyManagement>
     
     <dependencies>
+        <!-- testng -->
         <dependency>
+			<groupId>org.jboss.arquillian.testng</groupId>
+			<artifactId>arquillian-testng-container</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>7.3.0</version>
+		</dependency>
+        <!-- <dependency>
 			<groupId>org.jboss.arquillian.junit</groupId>
 			<artifactId>arquillian-junit-container</artifactId>
-		</dependency>
+		</dependency> -->
         <!-- Provided dependencies -->
         <dependency>
             <groupId>jakarta.platform</groupId>
@@ -51,12 +61,12 @@
             <scope>provided</scope>
         </dependency>
         <!-- For tests -->
-        <dependency>
+        <!-- <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
-        </dependency>
+        </dependency> -->
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-rs-client</artifactId>
@@ -89,8 +99,8 @@
         </dependency>
         <dependency>
             <groupId>io.openliberty.arquillian</groupId>
-            <artifactId>arquillian-liberty-managed</artifactId>
-            <version>1.0.7-SNAPSHOT</version>
+            <artifactId>arquillian-liberty-managed-jakarta</artifactId>
+            <version>2.0.0-M2-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -122,18 +132,18 @@
             <plugin>
                 <groupId>io.openliberty.tools</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
-                <version>3.2.3</version>
+                <version>3.3-M5-SNAPSHOT</version>
                 <configuration>
                     <!-- path to zip of local build of OL --> 
-                    <install>
+                    <!-- <install>
                         <runtimeUrl>file:////Users/kathrynkodama/devex/libertyGit/open-liberty/dev/cnf/release/dev/openliberty/20.0.0.11-202010191634/openliberty-20.0.0.11-202010191634.zip</runtimeUrl>
-                    </install>
-                    <!-- <runtimeArtifact>
+                    </install> -->
+                    <runtimeArtifact>
                         <groupId>io.openliberty.beta</groupId>
                         <artifactId>openliberty-runtime</artifactId>
-                        <version>20.0.0.11-beta</version>
+                        <version>21.0.0.1-beta</version>
                         <type>zip</type>
-                    </runtimeArtifact> -->
+                    </runtimeArtifact>
                     <!-- begin configure-arquillian -->
                     <!-- <arquillianProperties>
                         <verifyApps>arquillian-test</verifyApps>
